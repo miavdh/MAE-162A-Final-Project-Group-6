@@ -30,7 +30,51 @@ t4l = atan(3/4);
 % Newton-Raphson's to solve for angles
 function [t5, t6] = NR(r1, r2, r3, r4, r5, r6, r16, r15, ...
     t1, t2, t3, t4, t15, t16)
+% Newton-Raphson's to solve for angles
+function [t5, t6] = NR(r1, r2, r3, r4, r5, r6, r16, r15, ...
+    t1, t2, t3, t4, t15, t16)
 
+%make D very large beginning so we can start the loop
+d5 = 100;
+d6 = 100;
+D = [d5;d6];
+
+t5_0 = pi()/180;
+t6_0 = pi()/180;
+
+%variables for iterations
+n = 0;
+t5_1 = t5_0;
+t6_1 = t6_0;
+
+while norm(D, 1)>10^(-6);
+%iteration check
+n = n + 1; 
+
+%solve for the fuctions and jacobian
+f1 = r2*cos(t2) + r26*cos(t3) + r6*cos(t6) + r5*cos(t5) + r15*cos(t15) - r1
+f2 = r2*sin(t2) + r26*sin(t3) + r6*sin(t6 + r5*sin(t5) + r15*sin(t4)
+F = [f1; f2]
+
+J = [-r5*sin(t5), -r6*sin(t6) ; r5*cos(t5), r6*cos(t6)]
+
+%return values from solved iteration
+D = -J\F; 
+d5 = D(1);
+d6 = D(2);
+
+%update the initial parameters
+t5_1 = t5_1 + d5;
+t6_1 = t6_1 + d6; 
+end
+
+t5 = t5_1;
+t6 = t6_1;
+
+
+
+
+    
 
     
 end
