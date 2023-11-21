@@ -30,9 +30,6 @@ t4l = atan(3/4);
 % Newton-Raphson's to solve for angles
 function [t5, t6] = NR(r1, r2, r3, r4, r5, r6, r16, r15, ...
     t1, t2, t3, t4, t15, t16)
-% Newton-Raphson's to solve for angles
-function [t5, t6] = NR(r1, r2, r3, r4, r5, r6, r16, r15, ...
-    t1, t2, t3, t4, t15, t16)
 
 %make D very large beginning so we can start the loop
 d5 = 100;
