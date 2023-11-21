@@ -49,11 +49,11 @@ while norm(D, 1)>10^(-6);
 n = n + 1; 
 
 %solve for the fuctions and jacobian
-f1 = r2*cos(t2) + r26*cos(t3) + r6*cos(t6) + r5*cos(t5) + r15*cos(t15) - r1
-f2 = r2*sin(t2) + r26*sin(t3) + r6*sin(t6 + r5*sin(t5) + r15*sin(t4)
-F = [f1; f2]
+f1 = r2*cos(t2) + r26*cos(t3) + r6*cos(t6) + r5*cos(t5) + r15*cos(t15) - r1;
+f2 = r2*sin(t2) + r26*sin(t3) + r6*sin(t6 + r5*sin(t5) + r15*sin(t4);
+F = [f1; f2];
 
-J = [-r5*sin(t5), -r6*sin(t6) ; r5*cos(t5), r6*cos(t6)]
+J = [-r5*sin(t5), -r6*sin(t6) ; r5*cos(t5), r6*cos(t6)];
 
 %return values from solved iteration
 D = -J\F; 
@@ -67,11 +67,6 @@ end
 
 t5 = t5_1;
 t6 = t6_1;
-
-
-
-
-    
 
     
 end
