@@ -21,8 +21,10 @@ r3 = 2*A;
 r4 = r2;
 t1 = 0; %rad
 
-% Set minimum value angles
-
+% Set leftmost deflection angles
+t2l = pi()/2;
+t3l = 
+t4l = atan(3/4);
 
 
 % Newton-Raphson's to solve for angles
