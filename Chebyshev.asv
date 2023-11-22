@@ -1,5 +1,5 @@
 % ChebyShev Linkage At Rightmost Deflection
-function [true2, min3, min4, h, dfl] = Chebyshev(theta2)
+function [true2, true3, true4, h, dfl] = Chebyshev(theta2)
 % Clear cache
 % clear
 % close all
@@ -30,14 +30,10 @@ f = zeros(sysorder, 1);
 sol = zeros(4,4);
 
 % Create table title
-%fprintf("Guess X   Guess Y   Final X      Final Y\n")
+fprintf("Guess X   Guess Y   Final X      Final Y\n")
 
 % Number of guesses between 0 and 2pi
 numguess = 4;
-
-% Set minimum angle guess for 3 and 4
-min3 = 360;
-min4 = 360;
 
 % Run through range of guesses between 0 and 2pi to get complete picture
 % of solutions
@@ -107,18 +103,12 @@ for i = 1:numguess
         true3 = 180 * wrapTo2Pi(n(1,1)) / pi();
         true4 = 180 * wrapTo2Pi(n(2,1)) / pi();
 
-        %fprintf("%1.4f    %1.4f    %1.5f    %1.5f    %1.5f\n", theta3, theta4, true3, true4, true2);
+        fprintf("%1.4f    %1.4f    %1.5f    %1.5f    %1.5f\n", theta3, theta4, true3, true4, true2);
     end
     
-    % Find lowest value of theta 3 (angle should be acute)
-    if (true3 < min3)
-        min3 = true3;
-        min4 = true4;
-    end
-
 end
 
-dfl = r2 * cos(theta2) + r3 * cosd(min3) / 2 - r1 / 2;
-h = r2 * sin(theta2) + r3 * sind(min3) / 2;
+dfl = r2 * cos(theta2) + r3 * cos(n_1(1,1)) / 2 - 
+h = r2 * sin(theta2) + r3 * sin(n_1(1,1));
 
 end
