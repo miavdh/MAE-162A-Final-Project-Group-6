@@ -14,7 +14,7 @@
 %       horizontal.
 
 % Set fixed values
-A = 212.5; %mm
+A = 207; %mm
 r1 = 4*A; %mm
 r2 = 5*A;
 r3 = 2*A;
@@ -26,6 +26,9 @@ t2l = pi()/2;
 t3l = 
 t4l = atan(3/4);
 
+% Set rightmost deflection angles
+
+% Iterating r5, r6, r15
 
 % Newton-Raphson's to solve for angles
 function [t5, t6] = NR(r1, r2, r3, r4, r5, r6, r16, r15, ...
