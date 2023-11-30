@@ -6,15 +6,10 @@ function [min2, min3, min4, h, dfl] = Chebyshev(t2, r1, r2, r3, r4, t1)
 % clc
 
 % Test variables
-% r1 = 4*A;
-% r2 = 5*A;
-% r3 = 2*A;
-% r4 = r2;
-% t1 = 0;
-% t2 = 36.899*pi()/180;
 
 % Define variables
 sysorder = 2; % number of eqns
+
 theta3 = 0;
 theta4 = 0;
 eps = 1e-6;
@@ -123,7 +118,6 @@ for i = 1:numguess
 
 end
 
-% Determine maximum dfelection and 
 dfl = r2 * cos(t2) + r3 * cosd(min3) / 2 - r1 / 2;
 h = r2 * sin(t2) + r3 * sind(min3) / 2;
 

@@ -46,6 +46,13 @@ t4r = t4;
 t15r = t4r;
 t26r = t3r;
 
+% Set leftmost deflection angles
+t2l = 2*pi() - t4;
+t3l = 2*pi() - t3;
+t4l = 2*pi() - t2;
+t15l = t4l;
+t26l = t3l;
+
 % Iterating r5, r6, r15
 %r6 = 408; % decided based on geometric constraints (fit in rectangle)
 r15min = 400;
@@ -118,14 +125,6 @@ for r15 = r15min:deltar15:r15max
 end
 
 %% Leftmost deflection test
-
-% Set leftmost deflection angles
-t2l = 2*pi() - t4;
-t3l = 2*pi() - t3;
-t4l = 2*pi() - t2;
-t15l = t4l;
-t26l = t3l;
-
 sizeRight = size(r15right);
 iterLeft = sizeRight(1,2);
 
@@ -194,7 +193,7 @@ for i = 1:sizeLeft
                 t6center(1,1) = t6;
             else
                 r5center = [r5center; r5];
-                r15center = [r15center; r15];
+                r15centert = [r15center; r15];
                 r6center = [r6center, r6];
                 % t5left = [t5left; t5];
                 t6center = [t6center; t6];
