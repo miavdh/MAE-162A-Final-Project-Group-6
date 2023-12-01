@@ -18,7 +18,7 @@ close all
 clc
 
 % Set fixed values
-A = 204; %mm
+A = 200; %mm
 r1 = 4*A; %mm
 r2 = 5*A;
 r3 = 2*A;
@@ -45,6 +45,13 @@ t3r = t3;
 t4r = t4;
 t15r = t4r;
 t26r = t3r;
+
+% Set leftmost deflection angles
+t2l = 2*pi() - t4;
+t3l = 2*pi() - t3;
+t4l = 2*pi() - t2;
+t15l = t4l;
+t26l = t3l;
 
 % Iterating r5, r6, r15
 %r6 = 408; % decided based on geometric constraints (fit in rectangle)
@@ -118,14 +125,6 @@ for r15 = r15min:deltar15:r15max
 end
 
 %% Leftmost deflection test
-
-% Set leftmost deflection angles
-t2l = 2*pi() - t4;
-t3l = 2*pi() - t3;
-t4l = 2*pi() - t2;
-t15l = t4l;
-t26l = t3l;
-
 sizeRight = size(r15right);
 iterLeft = sizeRight(1,2);
 
