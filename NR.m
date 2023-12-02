@@ -1,15 +1,18 @@
 % Newton-Raphson's to solve for angles
-function [t5true, t6true] = NR(r1, r2, r3, r4, r5, r6, r26, r15, t1, t2, t3, t4, t15, t16, LR)
+function [t5true, t6true, CoM] = NR(r1, r2, r3, r4, r5, r6, r26, r15, t1, t2, t3, t4, t15, LR)
 % clc
 % clear all
 % close
-
-% A = 207; %mm
+% 
+% A = 201; %mm
 % r1 = 4*A; %mm
 % r2 = 5*A;
 % r3 = 2*A;
 % r4 = r2;
 % t1 = 0; %rad
+% r15 = 490;
+% r5 = 508;
+% r6 = 403;
 % 
 % % Set rightmost deflection angles
 % t2 = atan(3/4);
@@ -18,20 +21,24 @@ function [t5true, t6true] = NR(r1, r2, r3, r4, r5, r6, r26, r15, t1, t2, t3, t4,
 % r26 = r3/2;
 % t15 = t4;
 % t26 = t3;
-% r5 = 850;
+% r5 = 508;
 
 % Iterating r5, r6, r15
 % r6 = 371;
 % r15 = r4 - sqrt(r5^2 - r6^2);
 
 % Limits of angle 5 based on left or right limit
+% LR = false;
 if (LR == false)
-    t5min = pi();
-    t5max = 3*pi()/2;
+    t5min = pi/2;
+    t5max = pi;
 else
-    t5min = pi();
-    t5max = 2*pi();
+    t5min = 0;
+    t5max = pi;
 end
+
+% Limits of angle of 6
+t6max = pi/180;
 
 %% Newton raphsons
 
@@ -94,16 +101,18 @@ for i = 1:numguess
         end
         
         % Final values of t5 and t6
-        t5 = wrapTo2Pi(n_1(1,1));
-        t6 = wrapTo2Pi(n_1(2,1));
+        t5 = wrapToPi(n_1(1,1))
+        t6 = wrapToPi(n_1(2,1))
 
         % Test if angles are within expected range and minimize angle of 6
-        if (t5 >= t5min && t5 <= t5max && (t6 <= pi/2 || t6 >= 3*pi/2))
-            t5true = t5;
-            t6true = t6;
+        if (abs(t5) >= t5min && abs(t5) <= t5max && abs(t6) < t6max)
+            t5true = t5
+            t6true = t6
         end
     end
 end
+
+CoM = r2*sin(t2) + r3*sin(t3)/2 + r6*sin(t6true) / 2 - r1;
 
 % function end
 end

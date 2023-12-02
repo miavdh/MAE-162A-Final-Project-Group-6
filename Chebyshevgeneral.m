@@ -1,51 +1,46 @@
-% ChebyShev Linkage At Rightmost Deflection
-function [min2, min3, min4, h, dfl] = Chebyshev(t2, r1, r2, r3, r4, t1)
+% ChebyShev Linkage At Any Deflection
+function [t3, t4, h, dfl] = Chebyshevgeneral(t2, A, t3init, t4init)
 % Clear cache
 % clear
 % close all
 % clc
 
 % Test variables
-% r1 = 4*A;
-% r2 = 5*A;
-% r3 = 2*A;
-% r4 = r2;
-% t1 = 0;
+r1 = 4*A;
+r2 = 5*A;
+r3 = 2*A;
+r4 = r2;
 % t2 = 36.899*pi()/180;
-
-% Define variables
-sysorder = 2; % number of eqns
-theta3 = 0;
-theta4 = 0;
-eps = 1e-6;
+        
+% Initialize variables
 difx = 1;
 dify = 1;
 iter = 0;
+min3 = 0;
+min4 = 0;
+% theta3 = 2 * i * pi() / numguess;
+% theta4 = 2 * j * pi() / numguess;
+% n_1 = [t3init; t4init];
 
-% Define matrices
-J = zeros(sysorder, sysorder);
-Jinv = zeros(sysorder, sysorder);
-n_1 = [theta3; theta4];
-n = zeros(sysorder, 1);
-f = zeros(sysorder, 1);
-sol = zeros(4,4);
-
-% Create table title
-%fprintf("Guess X   Guess Y   Final X      Final Y\n")
+% Initialize J and f
+% J = [-r3 * sin(n_1(1,1)), -r4 * sin(n_1(2,1)); r3 * cos(n_1(1,1)), r4 * cos(n_1(2,1))];
+% f(1,1) = r2 * cos(t2) + r4 * cos(t4init) + ...
+%          r3 * cos(t3init) - r1;
+% f(2,1) = r2 * sin(t2) + r4 * sin(t4init) + ...
+%          r3 * sin(t3init);
 
 % Number of guesses between 0 and 2pi
 numguess = 8;
 
-% Set minimum angle guess for 3 and 4
-min2 = 360;
-min3 = 360;
-min4 = 360;
+% Set range for angle of 3
+t3min = pi/2;
+t3max = 7*pi/4;
 
 % Run through range of guesses between 0 and 2pi to get complete picture
 % of solutions
 for i = 1:numguess
     for j = 1:numguess
-        
+
         % Initialize variables
         difx = 1;
         dify = 1;
@@ -55,12 +50,9 @@ for i = 1:numguess
         n_1 = [theta3; theta4];
 
         % Initialize J and f
-        J(1,1) = -r3 * sin(n_1(1,1)); % partial of f1 w.r.t x
-        J(1,2) = -r4 * sin(n_1(2,1)); % partial of f2 w.r.t x
-        J(2,1) = r3 * cos(n_1(1,1)); % partial of f1 w.r.t y
-        J(2,2) = r4 * cos(n_1(2,1)); % partial of r2 w.r.t y
+        J = [-r3 * sin(n_1(1,1)), -r4 * sin(n_1(2,1)); r3 * cos(n_1(1,1)), r4 * cos(n_1(2,1))];
         f(1,1) = r2 * cos(t2) + r4 * cos(n_1(2,1)) + ...
-                 r3 * cos(n_1(1,1)) - r1 * cos(t1);
+                 r3 * cos(n_1(1,1)) - r1;
         f(2,1) = r2 * sin(t2) + r4 * sin(n_1(2,1)) + ...
                  r3 * sin(n_1(1,1));
         
@@ -69,13 +61,14 @@ for i = 1:numguess
             continue
         end
         
+
         % Newton-Raphson's
         while ((difx > eps || dify > eps) && iter < 1000)
             % Calculate inverse of J
-            Jinv = inv(J);
+            % Jinv = inv(J);
             
             % Determine value of xn based on xn-1
-            n = -Jinv * f + n_1;
+            n = -J\f + n_1;
             
             % Calculate difference between xn and xn-1
             difx = abs(n(1,1) - n_1(1,1));
@@ -93,38 +86,28 @@ for i = 1:numguess
             f(2,1) = r2 * sin(t2) + r4 * sin(n_1(2,1)) + ...
                      r3 * sin(n_1(1,1));
             
-            J(1,1) = -r3 * sin(n_1(1,1)); % partial of f1 w.r.t x
-            J(1,2) = -r4 * sin(n_1(2,1)); % partial of f2 w.r.t x
-            J(2,1) = r3 * cos(n_1(1,1)); % partial of f1 w.r.t y
-            J(2,2) = r4 * cos(n_1(2,1)); % partial of r2 w.r.t y
-
+            J = [-r3 * sin(n_1(1,1)), -r4 * sin(n_1(2,1)); r3 * cos(n_1(1,1)), r4 * cos(n_1(2,1))]; 
+        
             iter = iter + 1;
         end
-            
-        % Determine theta2
-        % theta2 = asin((4 * A - r3*sin(n(1,1))/2)/r2);
 
-        % Determine value of angles within 0 to 2pi
-        true2 = 180 * wrapTo2Pi(t2) / pi();
-        true3 = 180 * wrapTo2Pi(n_1(1,1)) / pi();
-        true4 = 180 * wrapTo2Pi(n_1(2,1)) / pi();
+        t3 = wrapTo2Pi(n_1(1,1));
+        t4 = wrapTo2Pi(n_1(2,1));
 
         % Find lowest value of theta 3 (angle should be acute)
-        if (true3 < min3)
-            min2 = true2;
-            min3 = true3;
-            min4 = true4;
+        if (t3 < t3max && t3 > t3min)
+            min3 = t3;
+            min4 = t4;
         end
 
         %fprintf("%1.4f    %1.4f    %1.5f    %1.5f    %1.5f\n", theta3, theta4, true3, true4, true2);
     end
-    
-    
-
 end
 
-% Determine maximum dfelection and 
-dfl = r2 * cos(t2) + r3 * cosd(min3) / 2 - r1 / 2;
-h = r2 * sin(t2) + r3 * sind(min3) / 2;
+t3 = wrapTo2Pi(min3);
+t4 = wrapTo2Pi(min4);
+
+% Determine maximum deflection and 
+h = r2 * sin(t2) + r3 * sin(t3) / 2;
 
 end

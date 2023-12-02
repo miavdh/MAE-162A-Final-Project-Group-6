@@ -1,5 +1,5 @@
 % Newton-Raphson's to solve for angles
-function [min5, min6] = NR(r1, r2, r3, r4, r5, r6, r26, r15, t1, t2, t3, t4, t15, t16)
+function [t5true, t6true] = NR(r1, r2, r3, r4, r5, r6, r26, r15, t1, t2, t3, t4, t15, t16, LR)
 % clc
 % clear all
 % close
@@ -24,15 +24,23 @@ function [min5, min6] = NR(r1, r2, r3, r4, r5, r6, r26, r15, t1, t2, t3, t4, t15
 % r6 = 371;
 % r15 = r4 - sqrt(r5^2 - r6^2);
 
+% Limits of angle 5 based on left or right limit
+if (LR == false)
+    t5min = pi/2;
+    t5max = pi;
+else
+    t5min = 0;
+    t5max = pi;
+end
 
 %% Newton raphsons
 
 % Number of guesses between 0 and 2pi
 numguess = 8;
 
-% Set minimum angle guess for 5 and 6
-min5 = 2*pi();
-min6 = 2*pi();
+% Set angle guess for 5 and 6
+t5true = 2*pi();
+t6true = 2*pi();
 
 % Run through range of guesses between 0 and 2pi to get complete picture
 % of solutions
@@ -86,12 +94,13 @@ for i = 1:numguess
         end
         
         % Final values of t5 and t6
-        t5 = wrapTo2Pi(n_1(1,1));
-        t6 = wrapTo2Pi(n_1(2,1));
+        t5 = wrapToPi(n_1(1,1));
+        t6 = wrapToPi(n_1(2,1));
 
-        if (t5 < min6)
-            min5 = t5;
-            min6 = t6;
+        % Test if angles are within expected range and minimize angle of 6
+        if (abs(t5) >= t5min && abs(t5) <= t5max && (abs(t6) < pi/90))
+            t5true = t5;
+            t6true = t6;
         end
     end
 end
