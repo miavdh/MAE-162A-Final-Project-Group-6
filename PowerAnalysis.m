@@ -109,7 +109,7 @@ x2CoMr6 = (r15*theta42*sin(angle4))+(r15*(theta41)^2*cos(angle4))+(r5*theta52*si
 y2CoMr6 = (-r15*theta42*cos(angle4))+(r15*(theta41)^2*sin(angle4))-(r5*theta52*cos(angle5))+(r5*(theta51)^2*sin(angle5))-(0.5*r6*theta62*cos(angle6))+(0.5*r6*(theta61)^2*sin(angle6))+(r66*theta62*cos(angle6+pi))-(r66*(theta61)^2*sin(angle6+pi));
 CoMa6 = atan(yComr6/xCoMr6);
 
-% Calculate the Moment of Inertia for each Link
+% Calculate the Change in Kinetic Energy DT/dt 
 
 A2 = Aj(m2,x1CoMr2,y1CoMr2, i2, theta21);
 A3 = Aj(m3,x1CoMr3,y1CoMr3, i3, theta31);
