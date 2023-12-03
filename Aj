@@ -1,3 +1,3 @@
 function [aj] = Aj(mj, x1j, y1j, Ij, thetaj1)
 
-aj = (mj*((x1j)^2+(y1j)^2))+(Ij*thetaj1)
+aj = (mj*((x1j)^2+(y1j)^2))+(Ij*(thetaj1)^2)
