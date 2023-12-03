@@ -110,6 +110,13 @@ y2CoMr6 = (-r15*theta42*cos(angle4))+(r15*(theta41)^2*sin(angle4))-(r5*theta52*c
 CoMa6 = atan(yComr6/xCoMr6);
 
 
+%  Given constant omega
+w = 1 * pi / 180;
+
+%  Omega and Alpha arrays (link 2)
+omega2 = w / 2 * (thetamax - thetamin) * cos(w * t);
+alpha2 = -w^2 / 2 * (thetamax - thetamin) * sin(w * t);
+
 % Calculate the Torque Needed at any Time 
 % P = T2 * w2 = sum(Aj * w2 * alpha2) + sum(Bj * w2^2) + sum(mj * g * y1CoMrj * w2)
 % Can cancel w2 on both sides
