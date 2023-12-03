@@ -116,7 +116,7 @@ A3 = Aj(m3,x1CoMr3,y1CoMr3, i3, theta31);
 A4 = Aj(m4,x1CoMr4,y1CoMr4, i4, theta41);
 A5 = Aj(m5,x1CoMr5,y1CoMr5, i5, theta51);
 A6 = Aj(m6,x1CoMr6,y1CoMr6, i6, theta61);
-sumA = sum(A2,A3,A4,A5,A6);
+
 
 
 
