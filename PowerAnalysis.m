@@ -44,6 +44,12 @@ m4 = rho*(r4+wL)*wL*dL;
 m5 = rho*(r5+wL)*wL*dL;
 
 % Calculate moments of inertia
+i1 = 0;
+i2 = (1/12)*m2*((wL^2)+(r2)^2);
+i3 = (1/12)*m3*((wL^2)+(r3)^2);
+i4 = (1/12)*m4*((wL^2)+(r4)^2);
+i5 = (1/12)*m5*((wL^2)+(r5)^2);
+i6 = (1/12)*m6*((wL^2)+(r6)^2);
 
 %% Repeat for 3 periods of oscillation
 
@@ -102,4 +108,16 @@ y1CoMr6 = (-r15*theta41*cos(angle4))-(r5*theta51*cos(angle5))-(0.5*r6*theta61*co
 x2CoMr6 = (r15*theta42*sin(angle4))+(r15*(theta41)^2*cos(angle4))+(r5*theta52*sin(angle5))+(r5*(theta51)^2*cos(angle5))+(0.5*r6*theta62*sin(angle6))+(0.5*r6*(theta61)^2*cos(angle6))-(r66*theta62*sin(angle6+pi))-(r66*(theta61)^2*cos(angle6+pi));
 y2CoMr6 = (-r15*theta42*cos(angle4))+(r15*(theta41)^2*sin(angle4))-(r5*theta52*cos(angle5))+(r5*(theta51)^2*sin(angle5))-(0.5*r6*theta62*cos(angle6))+(0.5*r6*(theta61)^2*sin(angle6))+(r66*theta62*cos(angle6+pi))-(r66*(theta61)^2*sin(angle6+pi));
 CoMa6 = atan(yComr6/xCoMr6);
+
+% Calculate the Moment of Inertia for each Link
+
+A2 = Aj(m2,x1CoMr2,y1CoMr2, i2, theta21);
+A3 = Aj(m3,x1CoMr3,y1CoMr3, i3, theta31);
+A4 = Aj(m4,x1CoMr4,y1CoMr4, i4, theta41);
+A5 = Aj(m5,x1CoMr5,y1CoMr5, i5, theta51);
+A6 = Aj(m6,x1CoMr6,y1CoMr6, i6, theta61);
+sumA = sum(A2,A3,A4,A5,A6);
+
+
+
 
