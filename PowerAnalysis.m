@@ -117,11 +117,11 @@ A4 = Aj(m4,x1CoMr4,y1CoMr4, i4, theta41);
 A5 = Aj(m5,x1CoMr5,y1CoMr5, i5, theta51);
 A6 = Aj(m6,x1CoMr6,y1CoMr6, i6, theta61);
 
-B2 = Bj(m2, x1CoMr2, x2CoMr2, y1CoMr1, y2CoMr2, i2, theta21, theta22);
-B3 = Bj(m2, x1CoMr2, x2CoMr2, y1CoMr1, y2CoMr2, i2, theta21, theta22);
-B4 = Bj(m2, x1CoMr2, x2CoMr2, y1CoMr1, y2CoMr2, i2, theta21, theta22);
-B5 = Bj(m2, x1CoMr2, x2CoMr2, y1CoMr1, y2CoMr2, i2, theta21, theta22);
-B6 = Bj(m2, x1CoMr2, x2CoMr2, y1CoMr1, y2CoMr2, i2, theta21, theta22);
+B2 = Bj(m2, x1CoMr2, x2CoMr2, y1CoMr2, y2CoMr2, i2, theta21, theta22);
+B3 = Bj(m3, x1CoMr3, x2CoMr3, y1CoMr3, y2CoMr3, i3, theta31, theta32);
+B4 = Bj(m4, x1CoMr4, x2CoMr4, y1CoMr4, y2CoMr4, i4, theta41, theta42);
+B5 = Bj(m5, x1CoMr5, x2CoMr5, y1CoMr5, y2CoMr5, i5, theta51, theta52);
+B6 = Bj(m6, x1CoMr6, x2CoMr6, y1CoMr6, y2CoMr6, i6, theta61, theta62);
 
 % Calculate the Change in Gravitational Potential Energy dU/dT
 
