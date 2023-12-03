@@ -136,7 +136,7 @@ B5 = Bj(m5, x1CoMr5, x2CoMr5, y1CoMr5, y2CoMr5, i5, theta51, theta52);
 B6 = Bj(m6, x1CoMr6, x2CoMr6, y1CoMr6, y2CoMr6, i6, theta61, theta62);
 
 A = (A2 * alpha2) + (A3 * alpha2) + (A4 * alpha2) + (A5 * alpha2) + (A6 * alpha2);
-B = (B2 * w2) + (B3 * w2) + (B4 * w2) + (B5 * w2) + (B6 * w2);
+B = (B2 * omega2) + (B3 * omega2) + (B4 * omega2) + (B5 * omega2) + (B6 * omega2);
 
 dTdt = A + B;
 
