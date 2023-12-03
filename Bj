@@ -1,3 +1,3 @@
-function [bj] = bj(mj, x1j, x2j, y1j, y2j, Ij, thetaj1, thetaj2)
+function [bj] = Bj(mj, x1j, x2j, y1j, y2j, Ij, thetaj1, thetaj2)
 
 bj = (mj * (x1j * x2j + y1j * y2j)) + (Ij * thetaj1 * thetaj2)
