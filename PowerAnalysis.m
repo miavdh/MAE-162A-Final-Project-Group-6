@@ -109,8 +109,13 @@ x2CoMr6 = (r15*theta42*sin(angle4))+(r15*(theta41)^2*cos(angle4))+(r5*theta52*si
 y2CoMr6 = (-r15*theta42*cos(angle4))+(r15*(theta41)^2*sin(angle4))-(r5*theta52*cos(angle5))+(r5*(theta51)^2*sin(angle5))-(0.5*r6*theta62*cos(angle6))+(0.5*r6*(theta61)^2*sin(angle6))+(r66*theta62*cos(angle6+pi))-(r66*(theta61)^2*sin(angle6+pi));
 CoMa6 = atan(yComr6/xCoMr6);
 
-% Calculate the Change in Kinetic Energy dT/dt 
 
+% Calculate the Torque Needed at any Time 
+% P = T2 * w2 = sum(Aj * w2 * alpha2) + sum(Bj * w2^2) + sum(mj * g * y1CoMrj * w2)
+% Can cancel w2 on both sides
+% T2 = sum(Aj * alpha2) + sum(Bj * w2) + sum(mj * g * y1CoMrj)
+
+% Calculate the Change in Kinetic Energy dT/dt 
 A2 = Aj(m2,x1CoMr2,y1CoMr2, i2, theta21);
 A3 = Aj(m3,x1CoMr3,y1CoMr3, i3, theta31);
 A4 = Aj(m4,x1CoMr4,y1CoMr4, i4, theta41);
