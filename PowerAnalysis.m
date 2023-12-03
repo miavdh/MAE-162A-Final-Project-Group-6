@@ -128,8 +128,14 @@ B4 = Bj(m4, x1CoMr4, x2CoMr4, y1CoMr4, y2CoMr4, i4, theta41, theta42);
 B5 = Bj(m5, x1CoMr5, x2CoMr5, y1CoMr5, y2CoMr5, i5, theta51, theta52);
 B6 = Bj(m6, x1CoMr6, x2CoMr6, y1CoMr6, y2CoMr6, i6, theta61, theta62);
 
-% Calculate the Change in Gravitational Potential Energy dU/dT
+% Calculate the Change in Gravitational Potential Energy dU/dt
 
-Ugrav2 = m2 * 9.81 * y1CoM2
+Ugrav2 = m2 * 9.81 * y1CoM2;
+Ugrav3 = m3 * 9.81 * y1CoM3;
+Ugrav4 = m4 * 9.81 * y1CoM4;
+Ugrav5 = m5 * 9.81 * y1CoM5;
+Ugrav6 = m6 * 9.81 * y1CoM6;
+dUdt=sum(Ugrav2,Ugrav3,Ugrav4,Ugrav5,Ugrav6);
+
 
 
