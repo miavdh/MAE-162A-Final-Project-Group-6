@@ -117,6 +117,11 @@ A4 = Aj(m4,x1CoMr4,y1CoMr4, i4, theta41);
 A5 = Aj(m5,x1CoMr5,y1CoMr5, i5, theta51);
 A6 = Aj(m6,x1CoMr6,y1CoMr6, i6, theta61);
 
+B2 = 
+B3 = 
+B4 = 
+B5 = 
+B6 = 
 
 
 
