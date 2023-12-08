@@ -151,6 +151,47 @@ t6Pow = zeros(numStep, 1);
 dflPow = zeros(numStep, 1); % horizontal deflection of table
 CoMPow = zeros(numStep, 1); % vertical deflection of table
 
+for t = tmin:step:tmax
+    i = i + 1;
+    t2 = ((t2max - t2min)/2) * sin(w*t) + ((t2max + t2min)/2); % angle of 2
+    w2 = ((t2max - t2min)/2) * w * cos(w*t); % angular speed of 2
+    a2 = -((t2max - t2min)/2) * w^2 * sin(w*t); % angular accel of 2
+
+    % Position Analysis of Vector Loop 1
+    % run function
+    [t3, t4, h] = Chebyshevgeneral(t2, A, t3init, t4init);
+
+    t3init = t3;
+    t4init = t4; % output
+
+    % Position Analysis of Vector Loop 2
+    [t5, t6] = SecondaryGeneral(A, r15, r5, r6, t2, t3, t4, t5init, t6init);
+    CoM = r2*sin(t2) + r3*sin(t3)/2 + r6*sin(t6) / 2;
+
+    % Set new input values
+    t5init = t5;
+    t6init = t6;
+
+    % Calculate hzn deflection of COM of link 6
+    dfl = r2 * cos(t2) + r3 * cos(t3) / 2 + r6 * cos(t6) / 2 - r1 / 2;
+
+    % Store values
+    tFull(i,1) = t;
+    t2Full(i,1) = t2; % deflection of 2
+    t3Full(i,1) = t3;
+    t4Full(i,1) = t4;
+    w2Full(i,1) = w2; % ang speed of 2
+    a2Full(i,1) = a2; % ang accel of 2
+    dflFull(i,1) = dfl; % horizontal deflection of table
+    CoMFull(i,1) = CoM; % vertical deflection of table
+    t6Full(i,1) = t6;
+
+    %Troubleshooting
+    fprintf('t2 = %1.5f, t3 = %1.5f, t4 = %1.5f\n t5 = %1.5f, t6 = %1.5f\n',...
+             180*t2/pi,  180*t3/pi,  t4*180/pi,  180*t5/pi,  180*t6/pi);
+    fprintf('CoM = %1.5f\n', CoM)
+end
+
 
 % Velocity/Accel Analysis of Vector Loop 1
 [t3p, t4p, t3pp, t4pp] = Loop1(A, t2, t3, t4, t, w);
