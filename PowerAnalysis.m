@@ -1,33 +1,68 @@
-% Full Power Analysis of Linkage
+function torque = PowerAnalysis(A, thetamax, thetamin, w, t, r15, r5, r6, t3, t4, t5, t6, ...
+    angle1, angle2, angle3, angle4, angle5, angle6)
 
 % Define link lengths
-A = 200;
 r1 = 4*A;
 r2 = 5*A;
 r3 = 2*A;
 r4 = r2;
-r15 = 499;
-r5 = 501;
-r6 = 400;
+r26 = r3/2;
 t1 = 0; % r1 is always horizontal to the right
 
 % Define Kinematic Coefficients
-theta31 = 3;
-theta32 = 3;
-theta41 = 3:
-theta42 = 3;
-theta51 = 3;
-theta52 = 3;
-theta61 = 3;
-theta62 = 3;
+
+J34 = [-r3*sin(t3) -r4*sin(t4);
+    r3*cos(t3) r4*cos(t4)]; % Jacobian for first vector loop
+sol341 = [r2*sin(t2); 
+    -r2*cos(t2)]; % solution vector for first kinematic coefficients
+
+theta341 = J34\sol341; % solve for first order kinematic coefficients for
+                       % theta 3, theta 4
+
+theta31 = theta341(1);
+theta41 = theta341(2);
+
+sol342 = [r2*cos(t2) + theta31^2*r3*cos(t3) + theta41^2*r4*cos(t4);
+    r2*sin(t2) + theta31^2*r3*sin(t3) + theta41^2*r4*sin(t4)];
+
+theta342 = J34\sol342;
+
+theta32 = theta342(1);
+theta42 = theta342(2);
+
+
+% second loop
+
+J56 = [-r5*sin(t5) -r6*sin(t6);
+    r5*cos(t5) r6*cos(t6)]; % Jacobian 
+sol561 = [r2*sin(t2) + r26*theta31*sin(t3) + r15*theta41*sin(t4); 
+    -r2*cos(t2) - r26*theta31*cos(t3) - r15*theta41*cos(t4)]; % solution vector 
+
+theta561 = J56\sol561; % solve for first order kinematic coefficients for
+                       % theta 5, theta 6
+
+theta51 = theta561(1);
+theta61 = theta561(2);
+
+sol562 = [(r2*cos(t2) + r26*theta32*sin(t3) + r26*theta31^2*cos(t3) + ...
+    r6*theta61^2*cos(t6) + r5*theta51^2*cos(t5) + r15*theta42*sin(t4) + ...
+    r15*theta41^2*cos(t4));
+    (r2*sin(t2) - r26*theta32*cos(t3) + r26*theta31^2*sin(t3) + ...
+    r6*theta61^2*sin(t6) + r5*theta51^2*sin(t5) - r15*theta42*cos(t4) + ...
+    r15*theta41^2*sin(t4));];
+
+theta562 = J56\sol562;
+
+theta52 = theta562(1);
+theta62 = theta562(2);
 
 % Define Angles(radians)
-angle1 = 0;
-angle2 = 30;
-angle3 = 30;
-angle4 = 30;
-angle5 = 30;
-angle6 = 30;
+% angle1 = 0;
+% angle2 = 30;
+% angle3 = 30;
+% angle4 = 30;
+% angle5 = 30;
+% angle6 = 30;
 
 
 % Define inputs
@@ -111,7 +146,7 @@ CoMa6 = atan(yComr6/xCoMr6);
 
 
 %  Given constant omega
-w = 1 * pi / 180;
+% w = 1 * pi / 180;
 
 %  Omega and Alpha arrays (link 2)
 omega2 = w / 2 * (thetamax - thetamin) * cos(w * t);
@@ -152,6 +187,8 @@ dUdt= Ugrav2 + Ugrav3 + Ugrav4 + Ugrav5 + Ugrav6;
 % Calculate Torque at a Time t
 
 torque = dUdt + dTdt;
+
+end
 
 
 
