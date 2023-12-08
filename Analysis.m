@@ -166,30 +166,17 @@ for t = tmin:step:tmax
 
     % Position Analysis of Vector Loop 2
     [t5, t6] = SecondaryGeneral(A, r15, r5, r6, t2, t3, t4, t5init, t6init);
-    CoM = r2*sin(t2) + r3*sin(t3)/2 + r6*sin(t6) / 2;
+
 
     % Set new input values
     t5init = t5;
     t6init = t6;
 
-    % Calculate hzn deflection of COM of link 6
-    dfl = r2 * cos(t2) + r3 * cos(t3) / 2 + r6 * cos(t6) / 2 - r1 / 2;
-
+    [torque] = PowerAnalysis(A, tmax, tmin, 
     % Store values
-    tFull(i,1) = t;
-    t2Full(i,1) = t2; % deflection of 2
-    t3Full(i,1) = t3;
-    t4Full(i,1) = t4;
-    w2Full(i,1) = w2; % ang speed of 2
-    a2Full(i,1) = a2; % ang accel of 2
-    dflFull(i,1) = dfl; % horizontal deflection of table
-    CoMFull(i,1) = CoM; % vertical deflection of table
-    t6Full(i,1) = t6;
+    torque(i,1) = torque;
 
-    %Troubleshooting
-    fprintf('t2 = %1.5f, t3 = %1.5f, t4 = %1.5f\n t5 = %1.5f, t6 = %1.5f\n',...
-             180*t2/pi,  180*t3/pi,  t4*180/pi,  180*t5/pi,  180*t6/pi);
-    fprintf('CoM = %1.5f\n', CoM)
+    
 end
 
 
