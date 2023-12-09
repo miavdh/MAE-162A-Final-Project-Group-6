@@ -1,4 +1,4 @@
-function torque = PowerAnalysis(A, thetamax, thetamin, w, t, r15, r5, r6, t3, t4, t5, t6, ...
+function torque = PA(A, thetamax, thetamin, w, t, r15, r5, r6, ...
     angle1, angle2, angle3, angle4, angle5, angle6)
 
 % Define link lengths
@@ -11,10 +11,10 @@ t1 = 0; % r1 is always horizontal to the right
 
 % Define Kinematic Coefficients
 
-J34 = [-r3*sin(t3) -r4*sin(t4);
-    r3*cos(t3) r4*cos(t4)]; % Jacobian for first vector loop
-sol341 = [r2*sin(t2); 
-    -r2*cos(t2)]; % solution vector for first kinematic coefficients
+J34 = [-r3*sin(angle3) -r4*sin(angle4);
+    r3*cos(angle3) r4*cos(angle4)]; % Jacobian for first vector loop
+sol341 = [r2*sin(angle2); 
+    -r2*cos(angle2)]; % solution vector for first kinematic coefficients
 
 theta341 = J34\sol341; % solve for first order kinematic coefficients for
                        % theta 3, theta 4
@@ -22,8 +22,8 @@ theta341 = J34\sol341; % solve for first order kinematic coefficients for
 theta31 = theta341(1);
 theta41 = theta341(2);
 
-sol342 = [r2*cos(t2) + theta31^2*r3*cos(t3) + theta41^2*r4*cos(t4);
-    r2*sin(t2) + theta31^2*r3*sin(t3) + theta41^2*r4*sin(t4)];
+sol342 = [r2*cos(angle2) + theta31^2*r3*cos(angle3) + theta41^2*r4*cos(angle4);
+    r2*sin(angle2) + theta31^2*r3*sin(angle3) + theta41^2*r4*sin(angle4)];
 
 theta342 = J34\sol342;
 
@@ -33,10 +33,10 @@ theta42 = theta342(2);
 
 % second loop
 
-J56 = [-r5*sin(t5) -r6*sin(t6);
-    r5*cos(t5) r6*cos(t6)]; % Jacobian 
-sol561 = [r2*sin(t2) + r26*theta31*sin(t3) + r15*theta41*sin(t4); 
-    -r2*cos(t2) - r26*theta31*cos(t3) - r15*theta41*cos(t4)]; % solution vector 
+J56 = [-r5*sin(angle5) -r6*sin(angle6);
+    r5*cos(angle5) r6*cos(angle6)]; % Jacobian 
+sol561 = [r2*sin(angle2) + r26*theta31*sin(angle3) + r15*theta41*sin(angle4); 
+    -r2*cos(angle2) - r26*theta31*cos(angle3) - r15*theta41*cos(angle4)]; % solution vector 
 
 theta561 = J56\sol561; % solve for first order kinematic coefficients for
                        % theta 5, theta 6
@@ -44,12 +44,12 @@ theta561 = J56\sol561; % solve for first order kinematic coefficients for
 theta51 = theta561(1);
 theta61 = theta561(2);
 
-sol562 = [(r2*cos(t2) + r26*theta32*sin(t3) + r26*theta31^2*cos(t3) + ...
-    r6*theta61^2*cos(t6) + r5*theta51^2*cos(t5) + r15*theta42*sin(t4) + ...
-    r15*theta41^2*cos(t4));
-    (r2*sin(t2) - r26*theta32*cos(t3) + r26*theta31^2*sin(t3) + ...
-    r6*theta61^2*sin(t6) + r5*theta51^2*sin(t5) - r15*theta42*cos(t4) + ...
-    r15*theta41^2*sin(t4));];
+sol562 = [(r2*cos(angle2) + r26*theta32*sin(angle3) + r26*theta31^2*cos(angle3) + ...
+    r6*theta61^2*cos(angle6) + r5*theta51^2*cos(angle5) + r15*theta42*sin(angle4) + ...
+    r15*theta41^2*cos(angle4));
+    (r2*sin(angle2) - r26*theta32*cos(angle3) + r26*theta31^2*sin(angle3) + ...
+    r6*theta61^2*sin(angle6) + r5*theta51^2*sin(angle5) - r15*theta42*cos(angle4) + ...
+    r15*theta41^2*sin(angle4));];
 
 theta562 = J56\sol562;
 
