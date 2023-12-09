@@ -172,13 +172,15 @@ for t = tmin:step:tmax
     t5init = t5;
     t6init = t6;
 
-    [torque] = PowerAnalysis(A, tmax, tmin, 
+    torque = PowerAnalysis(A, t2max, t2min, w, t(n), r15, r5, r6, ...
+    t1, t2(n), t3(n), t4(n), t5(n), t6(n));
     % Store values
     torque(i,1) = torque;
-
     
 end
 
+figure(4)
+plot(t, torque)
 
 % Velocity/Accel Analysis of Vector Loop 1
 [t3p, t4p, t3pp, t4pp] = Loop1(A, t2, t3, t4, t, w);
