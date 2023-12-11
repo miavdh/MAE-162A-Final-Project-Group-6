@@ -130,29 +130,20 @@ plot(t2Full, t6Full*180/pi)
 
 %% Repeat for 3 periods of oscillation
 
-%% Determine full range of positions w.r.t to time, t
-
 % Time limits for power
 w = pi/180;
 tmin = 0;
 tmax = 6*pi/w; % three full periods
-numStep = 3000;
+numStep = 300;
 step = (tmax - tmin)/numStep;
 
 % Set input and output matrices to store values
-tPow = zeros(numStep, 1);
-t2Pow = zeros(numStep, 1); % deflection of 2
-w2Pow = zeros(numStep, 1); % ang speed of 2
-a2Pow = zeros(numStep, 1); % ang accel of 2
-t3Pow = zeros(numStep, 1);
-t4Pow = zeros(numStep, 1);
-t5Pow = zeros(numStep, 1);
-t6Pow = zeros(numStep, 1);
-dflPow = zeros(numStep, 1); % horizontal deflection of table
-CoMPow = zeros(numStep, 1); % vertical deflection of table
+time = zeros(numStep, 1);
+torque = zeros(numStep, 1);
+j = 0;
 
 for t = tmin:step:tmax
-    i = i + 1;
+    j = j + 1;
     t2 = ((t2max - t2min)/2) * sin(w*t) + ((t2max + t2min)/2); % angle of 2
     w2 = ((t2max - t2min)/2) * w * cos(w*t); % angular speed of 2
     a2 = -((t2max - t2min)/2) * w^2 * sin(w*t); % angular accel of 2
@@ -164,26 +155,25 @@ for t = tmin:step:tmax
     t3init = t3;
     t4init = t4; % output
 
+    [t3p, t4p, t3pp, t4pp] = Loop1(r2, r3, r4, t2, t3, t4);
+
     % Position Analysis of Vector Loop 2
     [t5, t6] = SecondaryGeneral(A, r15, r5, r6, t2, t3, t4, t5init, t6init);
-
 
     % Set new input values
     t5init = t5;
     t6init = t6;
 
-    [torque] = PowerAnalysis(A, tmax, tmin, 
-    % Store values
-    torque(i,1) = torque;
+    [t5p, t5pp, t6p, t6pp] = Loop2(r2, r26, r15, r5, r6, t2, t3, t4, t5, t6, t3p, t4p, t3pp, t4pp);
 
-    
+    tor = PowerAnalysis(r2, r3, r4, r5, r6, h6, ...
+     t2, t3, t4, t5, t6, t3p, t3pp, ...
+     t4p, t4pp, t5p, t5pp, t6p, t6pp, w2, a2);
+    % Store values
+    time(j) = t;
+    torque(j) = tor;
+
 end
 
-
-% Velocity/Accel Analysis of Vector Loop 1
-[t3p, t4p, t3pp, t4pp] = Loop1(A, t2, t3, t4, t, w);
-
-% Velocity/Acceleration Analysis of Vector Loop 2
-
-
-% Find KC of center of mass of link 2, 3, 4, 5, 6
+figure(4)
+plot(time, torque)
